@@ -8,7 +8,8 @@ sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = project.archives_base_name
-version = project.minecraft_version+'-'+project.mod_version+'+v'+new Date().format('yyMMdd')
+def buildDate = project.findProperty('buildDate') ?: new Date().format('yyMMdd')
+version = project.minecraft_version+'-'+project.mod_version+'+v'+buildDate
 group = project.maven_group
 
 loom {
@@ -32,10 +33,10 @@ dependencies {
 }
 
 processResources {
-	inputs.property "version", project.version+'+v'+new Date().format('yyMMdd')
+	inputs.property "version", project.version
 
 	filesMatching("fabric.mod.json") {
-		expand "version": project.mod_version+'+v'+new Date().format('yyMMdd')
+		expand "version": project.mod_version+'+v'+buildDate
 	}
 }
 
